@@ -19,5 +19,5 @@ func main() {
 
 func ExampleHandler(w http.ResponseWriter, r *http.Request) {
     w.Header().Add("Content-Type", "application/json")
-    io.WriteString(w, `{"status":"oks"}`)
+    io.WriteString(w, `{"status":"ok"}`)
 }

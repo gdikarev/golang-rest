@@ -9,4 +9,4 @@ services:
             - "8080:8080"
         volumes: 
             - ./:/go/src/golang_rest
-        # restart: unless-stopped
+        restart: unless-stopped
