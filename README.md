@@ -1,1 +1,1 @@
-# golang-rest
+# basic rest api example 
