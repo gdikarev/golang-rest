@@ -7,4 +7,6 @@ services:
             dockerfile: docker/go/Dockerfile
         ports: 
             - "8080:8080"
-        restart: unless-stopped
+        volumes: 
+            - ./:/go/src/golang_rest
+        # restart: unless-stopped
