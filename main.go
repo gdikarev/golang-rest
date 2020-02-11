@@ -1,23 +1,31 @@
 package main
 
 import (
-    "io"
-    "fmt"
-    "github.com/gorilla/mux"
-    "net/http"
+    "log"
+    "github.com/gdikarev/golang-rest/app/apiserver"
 )
 
-func main() {
+var (
+    configPath string
+)
 
-    r := mux.NewRouter()
-
-	r.HandleFunc("/", ExampleHandler)
-
-	fmt.Println("Server listening!")
-	http.ListenAndServe(":8080", r)
+func init() {
+    flag.StringVar(&configPath, "config-path", "config/apiserver.toml", "path to config file")
 }
 
-func ExampleHandler(w http.ResponseWriter, r *http.Request) {
-    w.Header().Add("Content-Type", "application/json")
-    io.WriteString(w, `{"status":"oks"}`)
+func main() {
+    flag.Parse()
+
+
+    config := apiserver.NewConfig()
+    _, err := toml.DecodeFile(configPath, config)
+
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    s: = apiserver.New(config)
+    if err:= s.Start(); err != nil {
+        log.Fatal(err)
+    }
 }
