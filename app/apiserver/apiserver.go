@@ -1,5 +1,9 @@
 package apiserver
 
+import (
+	"github.com/sirupsen/logrus"
+)
+
 // ApiServer ... 
 type ApiServer struct {
 	config *Config
