@@ -13,14 +13,14 @@ type ApiServer struct {
 // New ...
 func New(config *Config) *ApiServer  {
 	return &ApiServer{
-		config: config
-		logger: logrus.New()
+		config: config,
+		logger: logrus.New(),
 	}
 }
 
 // Start ...
 func (s *ApiServer) Start() error {
-	if err != s.configureLogger; err != nill {
+	if err != s.configureLogger; err != nil {
 		return err
 	}
 
@@ -30,7 +30,7 @@ func (s *ApiServer) Start() error {
 }
 
 func (s *ApiServer) configureLogger() error {
-	level, err != logrus.ParseLevel(s.config.LogLevel)
+	level, err := logrus.ParseLevel(s.config.LogLevel)
 	if err != nil {
 		return err
 	}
