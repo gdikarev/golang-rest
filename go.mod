@@ -1,4 +1,4 @@
-module golang_rest
+module github.com/gdikarev/golang-rest
 
 go 1.13
 
