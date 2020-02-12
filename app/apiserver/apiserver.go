@@ -1,21 +1,22 @@
 package apiserver
 
 import (
-	"github.com/sirupsen/logrus"
-	"github.com/gorilla/mux"
-	"net/http"
 	"io"
+	"net/http"
+
+	"github.com/gorilla/mux"
+	"github.com/sirupsen/logrus"
 )
 
-// ApiServer ... 
+// ApiServer ...
 type ApiServer struct {
 	config *Config
 	logger *logrus.Logger
-	router * mux.Router
+	router *mux.Router
 }
 
 // New ...
-func New(config *Config) *ApiServer  {
+func New(config *Config) *ApiServer {
 	return &ApiServer{
 		config: config,
 		logger: logrus.New(),
@@ -53,6 +54,6 @@ func (s *ApiServer) configureRouter() {
 
 func (s *ApiServer) handleHello() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		io.WriteString(w , "Hello")
+		io.WriteString(w, "Hello")
 	}
 }
