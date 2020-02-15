@@ -9,4 +9,20 @@ services:
             - "8080:8080"
         volumes: 
             - ./:/go/src/golang_rest
+        depends_on: 
+            - mysql
         restart: unless-stopped
+
+    mysql:
+        image: docker.industi.com/mysql
+        hostname: mysql
+        restart: always
+        environment:
+            MYSQL_DATABASE: golang_rest
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - '3306:3306'
+        volumes:
+            - /home/mysql-db:/var/lib/mysql

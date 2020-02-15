@@ -4,20 +4,22 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/gdikarev/golang-rest/app/store"
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
 )
 
-// ApiServer ...
-type ApiServer struct {
+// APIServer ...
+type APIServer struct {
 	config *Config
 	logger *logrus.Logger
 	router *mux.Router
+	store  *store.Store
 }
 
 // New ...
-func New(config *Config) *ApiServer {
-	return &ApiServer{
+func New(config *Config) *APIServer {
+	return &APIServer{
 		config: config,
 		logger: logrus.New(),
 		router: mux.NewRouter(),
@@ -25,19 +27,23 @@ func New(config *Config) *ApiServer {
 }
 
 // Start ...
-func (s *ApiServer) Start() error {
+func (s *APIServer) Start() error {
 	if err := s.configureLogger(); err != nil {
 		return err
 	}
 
 	s.configureRouter()
 
+	if err := s.configureStore(); err != nil {
+		return err
+	}
+
 	s.logger.Info("starting api server")
 
 	return http.ListenAndServe(s.config.BindAddr, s.router)
 }
 
-func (s *ApiServer) configureLogger() error {
+func (s *APIServer) configureLogger() error {
 	level, err := logrus.ParseLevel(s.config.LogLevel)
 	if err != nil {
 		return err
@@ -48,12 +54,25 @@ func (s *ApiServer) configureLogger() error {
 	return nil
 }
 
-func (s *ApiServer) configureRouter() {
+func (s *APIServer) configureRouter() {
 	s.router.HandleFunc("/", s.handleHello())
 }
 
-func (s *ApiServer) handleHello() http.HandlerFunc {
+func (s *APIServer) handleHello() http.HandlerFunc {
+	var p string = "adad221"
+	var e = &p
 	return func(w http.ResponseWriter, r *http.Request) {
-		io.WriteString(w, "Hello")
+		io.WriteString(w, *e)
 	}
+}
+
+func (s *APIServer) configureStore() error {
+	st := store.New(s.config.Store)
+	if err := st.Open(); err != nil {
+		return err
+	}
+
+	s.store = st
+
+	return nil
 }

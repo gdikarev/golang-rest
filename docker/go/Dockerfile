@@ -7,6 +7,8 @@ RUN apk update && apk add git && go get github.com/githubnemo/CompileDaemon
 RUN go get github.com/gorilla/mux
 RUN go get github.com/BurntSushi/toml
 RUN go get github.com/sirupsen/logrus
+RUN go get -v golang.org/x/tools/gopls
+RUN go get github.com/go-sql-driver/mysql
 ENTRYPOINT CompileDaemon --build="go build main.go" --command=./main
 CMD ./${APP_NAME}
 EXPOSE ${PORT}

@@ -1,2 +1,5 @@
 bind_addr = ":8080"
 log_level = "debug"
+
+[store]
+database_url = "root:root@tcp(mysql:3306)/golang_rest"
