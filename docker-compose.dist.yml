@@ -11,10 +11,14 @@ services:
             - ./:/go/src/golang_rest
         depends_on: 
             - mysql
+        networks:
+            - local
         restart: unless-stopped
 
     mysql:
-        image: docker.industi.com/mysql
+        image: mysql
+        networks:
+            - local
         hostname: mysql
         restart: always
         environment:
@@ -26,3 +30,6 @@ services:
             - '3306:3306'
         volumes:
             - /home/mysql-db:/var/lib/mysql
+
+networks:
+    local:
