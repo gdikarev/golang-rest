@@ -44,6 +44,7 @@ func (s *Store) Close() {
 	s.db.Close()
 }
 
+// Employee ...
 func (s *Store) Employee() *EmployeeRepository {
 	if s.employeeRepository != nil {
 		return s.employeeRepository

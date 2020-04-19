@@ -1,9 +1,11 @@
 package store
 
 import (
+	"fmt"
 	"testing"
 )
 
+// TestStore ...
 func TestStore(t *testing.T, databaseURL string) (*Store, func(...string)) {
 	t.Helper()
 
@@ -16,10 +18,11 @@ func TestStore(t *testing.T, databaseURL string) (*Store, func(...string)) {
 
 	return s, func(tables ...string) {
 		if len(tables) > 0 {
-			// Refactor for loop on tables to truncate
-			// if _, err := s.db.Exec(fmt.Sprintf("TRUNCATE TABLE %s", strings.Join(tables, ", "))); err != nil {
-			// 	t.Fatal(err)
-			// }
+			for i := 0; i < len(tables); i++ {
+				if _, err := s.db.Exec(fmt.Sprintf("TRUNCATE TABLE %s", tables[i])); err != nil {
+					t.Fatal(err)
+				}
+			}
 		}
 
 		s.Close()

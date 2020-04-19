@@ -12,7 +12,8 @@ RUN apk update && apk add git && go get github.com/githubnemo/CompileDaemon \
     && go get -v golang.org/x/tools/gopls \
     && go get github.com/go-sql-driver/mysql \
     && go get github.com/stretchr/testify \
-    && go get -u -d github.com/golang-migrate/migrate
+    && go get -u -d github.com/golang-migrate/migrate \
+    && go get github.com/google/uuid
 ENTRYPOINT CompileDaemon --build="go build main.go" --command=./main
 CMD ./${APP_NAME}
 EXPOSE ${PORT}
